@@ -25,11 +25,10 @@ const Schedule = ({ navigation, route }) => {
     }
 
     const getData = async () => {
-        
         try {
             const value = await AsyncStorage.getItem(storageKey)
             if(value !== null) {
-                setSchedule(schedule => value);
+                setSchedule(value);
             }
         } catch(e) {
             // error reading value
@@ -37,10 +36,21 @@ const Schedule = ({ navigation, route }) => {
         
     }
 
+    const clearText = () => {
+        setText('');
+    }
+
+    const appendToSchedule = (scheduleItem) => {
+        setSchedule(schedule + '\n' + scheduleItem);
+    }
+
     const handleAddEvent = () => {
-        setSchedule(schedule => schedule + '\n' + text);
-        setText(text => '')
-        console.log(schedule)
+        console.log("before text: " + text)
+        console.log("before schedule: " + schedule)
+        appendToSchedule(text)
+        clearText()
+        console.log("after text: " + text)
+        console.log("after schedule: " + schedule)
         storeData()
     }
 
